@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/registration', [AuthController::class, 'registration']);
+Route::post('/auth', [AuthController::class, 'auth']);
+Route::middleware('auth:sanctum')->delete('/logout', [AuthController::class, 'logout']);
