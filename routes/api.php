@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
   Route::get('/profile', [UserController::class, 'profile']);
   Route::patch('/profile', [UserController::class, 'update']);
+
+  Route::post('/videos', [VideoController::class, 'store']);
 });
