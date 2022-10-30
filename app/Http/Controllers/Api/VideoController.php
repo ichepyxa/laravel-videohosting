@@ -3,32 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VideoRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class VideoController extends Controller
 {
-    /**
-     * Create video
-     * 
-     * @param VideoRequest $request
-     * @return Response
-     */
-    public function store(VideoRequest $request): Response
+    public function search(Request $request)
     {
-        $data = [
-            'video_path' => $request->file('video_file')->store('videos'),
-            'cover_path' => $request->file('cover_file')->store('covers'),
-        ];
+        $videos = Video::query()->get();
 
-        Auth::user()->videos()->create([
-            ...$request->validated(),
-            ...$data
-        ]);
+        // TODO: search video filters
 
-        return response()->noContent();
+        return $videos;
     }
 }
