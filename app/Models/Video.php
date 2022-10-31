@@ -5,7 +5,10 @@ namespace App\Models;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class Video extends Model
@@ -25,6 +28,46 @@ class Video extends Model
         'cover_path',
         'status'
     ];
+
+    /**
+     * Video's user relationship
+     *
+     * @return HasOne
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * Has user like on this video
+     *
+     * @return bool
+     */
+    public function hasLike(): bool
+    {
+        return $this->likes()->where('user_id', Auth::id())->exists();
+    }
+
+    /**
+     * Video's likes relationship
+     *
+     * @return HasMany
+     */
+    public function likes(): HasMany
+    {
+        return $this->hasMany(VideoLike::class, 'video_id', 'id');
+    }
+
+    /**
+     * Video's comments relationship
+     *
+     * @return HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(VideoComment::class, 'video_id', 'id');
+    }
 
     /**
      * Upload video
@@ -63,7 +106,7 @@ class Video extends Model
     }
 
     /**
-     * Mutator for video url
+     * Accessor for video url
      *
      * @return UrlGenerator|string
      */
@@ -73,7 +116,7 @@ class Video extends Model
     }
 
     /**
-     * Mutator for cover url
+     * Accessor for cover url
      *
      * @return UrlGenerator|string
      */

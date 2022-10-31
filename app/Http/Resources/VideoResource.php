@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Video;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
-class MyVideoResource extends JsonResource
+class VideoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +18,9 @@ class MyVideoResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'user' => ProfileResource::make($this->user),
             'title' => $this->title,
-            'description' => $this->description,
-            'video_url' => $this->video_url,
             'cover_url' => $this->cover_url,
-            'status' => $this->status,
             'date' => $this->created_at,
             'like_count' => $this->likes()->count(),
             'comment_count' => $this->comments()->count(),
