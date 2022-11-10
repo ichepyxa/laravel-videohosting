@@ -29,6 +29,13 @@ class Video extends Model
         'status'
     ];
 
+    static $statuses = [
+        'on-check',
+        'publish',
+        'rejected',
+        'arhived',
+    ];
+
     /**
      * Video's user relationship
      *
