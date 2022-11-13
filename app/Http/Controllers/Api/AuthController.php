@@ -50,8 +50,10 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => false,
-            'email' => [
-                'Incorrect login date',
+            'errors' => [
+                'email' => [
+                    'Incorrect login date',
+                ],
             ]
         ], 422);
     }
