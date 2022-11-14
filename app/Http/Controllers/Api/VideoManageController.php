@@ -52,14 +52,16 @@ class VideoManageController extends Controller
             return response()->json([
                 'message' => 'Forbidden',
             ], 403);
-        }
+        };
 
         $video->uploadVideo($request->file('video_file'));
-        $video->uploadVideo($request->file('cover_file'));
+        $video->uploadCover($request->file('cover_file'));
 
-        $video->update([[
+        $video->update([
             'status' => 'on-check',
-        ], ...$request->validated()]);
+            ...$request->validated()
+        ]);
+        $video->save();
 
         return response()->noContent();
     }
