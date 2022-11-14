@@ -23,8 +23,7 @@ class VideoResource extends JsonResource
             'cover_url' => $this->cover_url,
             'date' => $this->created_at,
             'like_count' => $this->likes()->count(),
-            'comment_count' => $this->comments()->count(),
-            'has_like' => $this->hasLike()
+            'comment_count' => $this->comments()->count()
         ];
     }
 }
